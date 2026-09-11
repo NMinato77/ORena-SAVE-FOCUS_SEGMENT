@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "model_id": "siglip-base-patch16-384",
+  "source": "local model-cache snapshot; host path omitted from public release",
+  "model_type": "siglip",
+  "architecture": "SiglipModel",
+  "files": {
+    ".gitattributes": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361",
+    "README.md": "a1ea3e03026b4071058bee78858cc252da335bd6461ce6faab2514d2fad01af8",
+    "config.json": "bd23a8a92607ff1ebdd84b625772246d9b0160d0a7f4b63bde2bd3ae1baa21de",
+    "model.safetensors": "f273e98edc393ec5ffea71518b0c9ab4b0e8dd2be43affb22d49ff659fb28605",
+    "preprocessor_config.json": "f59da2f87c3cd079bd4f8f3037e81b277c60c498e279a8020331f67a5a3157e8",
+    "special_tokens_map.json": "2b6a1ff67a27e0df9ac0c7d93250fc0d87431c7b366b3d5669217104f9088a26",
+    "spiece.model": "1e5036bed065526c3c212dfbe288752391797c4bb1a284aa18c9a0b23fcaf8ec",
+    "tokenizer.json": "c6e405cb7c670d56636a9402c81023a55bc6c3c53d89cf02b92f5c5005bfe920",
+    "tokenizer_config.json": "d6423dae508cc3a129d22ea443841c111832a1a73125b8f25ea8736951698bcb"
+  },
+  "classifier": {
+    "file": "q2_siglip_text_r5.joblib",
+    "sha256": "a335c568991db95b7633dd9fb9c23eef2ee276ae51485592781056c1917c9158",
+    "classes": [
+      "aggregation",
+      "complex_reasoning",
+      "event_understanding",
+      "object_recognition",
+      "temporal_grounding"
+    ],
+    "input": "768-dimensional float32 pooler_output; no L2 normalization",
+    "vectorizer": null,
+    "model": "LogisticRegression(C=0.1, class_weight=balanced, solver=lbfgs, max_iter=2000, random_state=11011)"
+  },
+  "offline": {
+    "local_files_only": true,
+    "network_required": false,
+    "startup_load_once": true,
+    "runtime_input": "question text only"
+  }
+}

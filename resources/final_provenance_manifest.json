@@ -1,0 +1,762 @@
+{
+  "schema_version": 1,
+  "manifest_status": "INCOMPLETE_EXPECTED",
+  "design_version": "SEGMENT_P2_T0_v1",
+  "candidate_id": "SEG010_H2_P2_T0_specialist_v1",
+  "created_at_utc": "2026-09-11T02:06:59Z",
+  "updated_at_utc": "2026-09-11T14:58:12Z",
+  "repository": {
+    "git_commit": "739be7af9a4ede44fbca7c833ed7f8704bd1c0c9",
+    "git_commit_role": "functional source/config baseline; host-side final release commit is recorded externally",
+    "branch": "feature/segment-prefetch-pilot",
+    "manifest_schema": "SEG010_FINAL_PROVENANCE_v1"
+  },
+  "prebuild_image_manifest": {
+    "status": "FINALIZED_FOR_BUILD",
+    "image_embedded": true,
+    "host_only_identity_fields": [
+      "submission_environment.docker_image_sha256",
+      "submission_environment.python",
+      "submission_environment.torch",
+      "submission_environment.transformers",
+      "submission_environment.scikit_learn",
+      "submission_environment.joblib",
+      "submission_environment.decord",
+      "submission_environment.other_material_dependencies",
+      "provenance_artifacts.docker_image.id",
+      "provenance_artifacts.docker_image.digest",
+      "provenance_artifacts.submission_archive.path",
+      "provenance_artifacts.submission_archive.size",
+      "provenance_artifacts.submission_archive.sha256"
+    ],
+    "host_side_record": "outputs/SEG010_FINAL_INTEGRATION_STAGE_C_v1/host/host_docker_result_template.json",
+    "do_not_edit_after_build": true
+  },
+  "base_model": {
+    "name": "Qwen/Qwen3-VL-8B-Instruct",
+    "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+    "dtype": "bfloat16",
+    "architecture": "Qwen3VLForConditionalGeneration"
+  },
+  "specialists": {
+    "general": {
+      "status": "BOUND",
+      "checkpoint": "<private-training-output>/SEG010_FINAL_v4/checkpoints/GENERAL_FINAL",
+      "checkpoint_sha256": "b77f1627709032f80d7c105e877a45330551de7a88a5cbfb1ccf52e83d4ef7f7",
+      "training_manifest_sha256": "8d7fbbea1ffb2d8e91d8d67e8fcf2826d217398986d96b214c2cef67f2c5b5af",
+      "training_config": "<private-training-output>/SEG010_final_training_preflight_scaled_transfer_v4/general_final_training_config.json",
+      "training_config_sha256": "5ac96882e3c2d8a81cee3a1b71cb1db126872d655f454a7eb0aca284ad75efa3",
+      "union_state_sha256": "8a8a91a9de75d545f8147c81d96bf2c7c42381390834e04dad7bcfc39350fd72",
+      "expected_tensors": 560,
+      "expected_params": 205284608,
+      "recipe": "SEG010_FINAL_GENERAL_FULL_PUBLIC_V4",
+      "final_global_update": 9116,
+      "training_completion_status": "COMPLETE",
+      "bound_state_pack": "resources/specialists/general_final_union_adapted_weights.safetensors",
+      "bound_state_pack_sha256": "b77f1627709032f80d7c105e877a45330551de7a88a5cbfb1ccf52e83d4ef7f7",
+      "training_manifests": {
+        "general_stage1_seg_shuffle.jsonl": "d795393f205fdfb0dc8411ebd174ca57a78b6c226e9ad61b82300291dd0fb3e0",
+        "general_stage2_seg_shuffle.jsonl": "f198d309d98bfc65a1a23b6faa8646b257435d9f0f36e8ed5685df3d85347932",
+        "general_ps_frame_stream.jsonl": "00dc8da6d0d655b697fc8fd96c5d3deb2d46bb88e913d45bf1c3b7a738f87ac9"
+      },
+      "actual_tensors": 560,
+      "actual_params": 205284608
+    },
+    "agg": {
+      "status": "BOUND",
+      "checkpoint": "<private-training-output>/SEG010_AGG_FINAL_v4/checkpoints/AGG_FINAL",
+      "checkpoint_sha256": "724ec447dbba79ff902422f34d0ae14801e8de4d318be7f8474b45bd30a91739",
+      "training_manifest_sha256": "158e374ee278229ddeaa999cafa565fa80b69940c61cbb6b6c12c2138a4cc104",
+      "training_config": "<private-training-output>/SEG010_final_training_preflight_scaled_transfer_v4/aggregation_final_training_config.json",
+      "training_config_sha256": "7c9567fd8891a0ff75476d9362fabbbd9d33046428d755408e02e7b1efd002cb",
+      "union_state_sha256": "13f06757c099762f4eccf296e5fddd6fdb0edf4857d8616815fe11033028a9f1",
+      "expected_tensors": 560,
+      "expected_params": 205284608,
+      "recipe": "SEG010_FINAL_AGGREGATION_FULL_PUBLIC_V4",
+      "epoch_selection": 1,
+      "final_global_update": 734,
+      "training_completion_status": "COMPLETE",
+      "bound_state_pack": "resources/specialists/agg_final_union_adapted_weights.safetensors",
+      "bound_state_pack_sha256": "724ec447dbba79ff902422f34d0ae14801e8de4d318be7f8474b45bd30a91739",
+      "training_manifests": {
+        "aggregation_rand_frame_2048.jsonl": "430c9945a74e270fbd6c7853ff0f0ae15ffe9bf1d104079f2baf57d987c3ff57",
+        "aggregation_general_seg_2048.jsonl": "d2810149bd84b73d279a3155eba2a954d7da22fbfd85915aa426cd46011ae69b",
+        "aggregation_fullpublic_shuffle.jsonl": "c816c1dee956faba956577c3a4f8475756cac7a98f6c469250d5d0f253e29484"
+      },
+      "optimizer_reset_boundary": "before AGG_STAGE3_FULL_PUBLIC",
+      "actual_tensors": 560,
+      "actual_params": 205284608
+    }
+  },
+  "adaptation_scope": {
+    "language_lora": {
+      "tensor_count": 504,
+      "parameter_count": 43646976
+    },
+    "vision_lora": {
+      "tensor_count": 32,
+      "parameter_count": 1140736
+    },
+    "merger": {
+      "tensor_count": 24,
+      "parameter_count": 160496896
+    },
+    "base_frozen": true,
+    "scope_version": "LMV",
+    "total_expected_tensor_count": 560,
+    "total_expected_parameter_count": 205284608
+  },
+  "router": {
+    "policy_version": "SEG010_H2_P2_T0_specialist_v1",
+    "q0_code_sha256": "01a61024a8616308eafdbe80ad65e7f85c4288d8089ad79fbbaa8cee8b314c53",
+    "q1_artifact_sha256": "c67cc7f7fdec10e96d9ef59ab6ef316b471bf7c34a54226b146e7a2cab6912e3",
+    "q2_classifier_sha256": "a335c568991db95b7633dd9fb9c23eef2ee276ae51485592781056c1917c9158",
+    "q2_encoder_manifest_sha256": "239fe4245fdc69998174c69aec294f4355acd0b0e55946d4c335caa008ab7fcc",
+    "q2_encoder_manifest_path": "resources/q2_siglip_manifest.json",
+    "fallback_chain": [
+      "H2",
+      "Q1-R5",
+      "Q0_RULE"
+    ],
+    "fallback_trigger": "startup_or_resource_failure_only"
+  },
+  "routes": {
+    "A": "AGG / R0",
+    "B": "GENERAL / R0",
+    "C": "GENERAL / R1"
+  },
+  "sampling": {
+    "source_fps": 5.0,
+    "r0": {
+      "algorithm": "fixed_1fps_clip_relative_timeline_then_endpoint_preserving_uniform_cap",
+      "max_frames": 240,
+      "integer_interpolation": "floor(i * (n - 1) / (m - 1))",
+      "max_pixels": 50176,
+      "endpoint_preserving": true
+    },
+    "r1": {
+      "source": "R0 timeline",
+      "count": "max(2, ceil(N0 / 2)) when N0 >= 2; otherwise N0",
+      "integer_interpolation": "floor(i * (n - 1) / (m - 1))",
+      "max_pixels": 100352,
+      "endpoint_preserving": true
+    }
+  },
+  "prompt_and_timestamps": {
+    "prompt_version": "P2",
+    "prompt_source_sha256": "c69cb8d5a3ac27c160369a2ad7791acf1dd6cad3f5ba783a56870efe9b6625a7",
+    "segment_prompt": "Use the sampled frames as visual evidence. Base visual claims on the frames. When the question explicitly asks about typical surgical use, clinical context, or what usually occurs, you may also use your general surgical knowledge.",
+    "timestamp_version": "T0",
+    "timestamp_definition": "absolute_timestamp = request.start_time + selected_clip_relative_frame_index / decoded_fps",
+    "timestamp_serialization": "Frame timestamp (absolute source-procedure timeline): {timestamp:.1f} seconds."
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 128,
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+      "chat_template_source": "5c72a170d2a4a1a3bc5adad2e689ae28138a9700e5b8c96c0266331e86c0acce"
+  },
+  "reducer_and_output": {
+    "reducer_source_sha256": "d0cdbf6ef859beebc1786b2bbb9d39537134b08a8d0fa79d63f4a4249f86f69f",
+    "formatter_source": "focus.data.formats official formatter via resources/format_reducer.py",
+    "output_schema": "focus Response(qID, content, latency) serialized by save_items to answer.json",
+    "qid_preservation": true
+  },
+  "submission_environment": {
+    "docker_image_tag": "segment-algorithm",
+    "docker_image_sha256": "PLACEHOLDER_DOCKER_IMAGE_SHA256",
+    "python": "PLACEHOLDER_FINAL_RUNTIME_PYTHON_VERSION",
+    "torch": "PLACEHOLDER_FINAL_RUNTIME_TORCH_VERSION",
+    "transformers": "PLACEHOLDER_FINAL_RUNTIME_TRANSFORMERS_VERSION",
+    "scikit_learn": "PLACEHOLDER_FINAL_RUNTIME_SCIKIT_LEARN_VERSION",
+    "joblib": "PLACEHOLDER_FINAL_RUNTIME_JOBLIB_VERSION",
+    "decord": "PLACEHOLDER_FINAL_RUNTIME_DECORD_VERSION",
+    "other_material_dependencies": "PLACEHOLDER_FINAL_RUNTIME_DEPENDENCIES",
+    "gpu_target": "SEGMENT platform: NVIDIA L40S 48GB or NVIDIA RTX PRO 6000 Blackwell 96GB",
+    "pre_host_devcontainer_torch": "2.5.1+cu124",
+    "pre_host_devcontainer_cuda": "12.4",
+    "docker_compatibility": "PENDING_HOST_DOCKER"
+  },
+  "runtime_verification": {
+    "specialist_switch_equivalence": "PASS",
+    "peak_vram_mib": 22468.80810546875,
+    "startup_seconds": 7.577223286032677,
+    "route_seconds": 14.534995086491108,
+    "switch_latency_seconds": 0.0038542356342077255,
+    "r0_latency_seconds": 5.178059782832861,
+    "r1_latency_seconds": 4.139684345573187,
+    "e2e_latency_seconds": 5.204064466059208,
+    "official_local_test": "PENDING_HOST_DOCKER"
+  },
+  "fail_closed_requirements": {
+    "general_status_must_be_bound_for_release": true,
+    "agg_status_must_be_bound_for_release": true,
+    "specialist_sha256_required_for_release": true,
+    "unresolved_placeholders_rejected_for_release": true,
+    "state_pack_validation": "exact 560 keys, LMV components, shapes, dtypes, and metadata/SHA before forward"
+  },
+  "stage_a": {
+    "status": "PASS",
+    "runtime_forward_binding": "DEFERRED_TO_STAGE_B",
+    "cpu_structural_validation": "PASS",
+    "release_ready": false
+  },
+  "stage_b": {
+    "status": "PASS",
+    "forward_binding": "IMPLEMENTED",
+    "implementation_source": "submission/segment-algorithm/resources/specialist_runtime.py",
+    "implementation_source_sha256": "a0c91d376690834a0baea244c28c30eea5ce66a6edc10fd84153baf798570e88",
+    "shared_base": true,
+    "specialist_switch": "PASS",
+    "equivalence": {
+      "all_pass": true,
+      "details": {
+        "general_direct_vs_agg_to_general": {
+          "generated_text_exact": true,
+          "generated_sha_exact": true,
+          "first_token_argmax_exact": true,
+          "max_abs_logit_diff": 0.0,
+          "mean_abs_logit_diff": 0.0,
+          "reference_first_token_argmax": 9454,
+          "switched_first_token_argmax": 9454
+        },
+        "agg_direct_vs_general_to_agg": {
+          "generated_text_exact": true,
+          "generated_sha_exact": true,
+          "first_token_argmax_exact": true,
+          "max_abs_logit_diff": 0.0,
+          "mean_abs_logit_diff": 0.0,
+          "reference_first_token_argmax": 2753,
+          "switched_first_token_argmax": 2753
+        },
+        "general_roundtrip": {
+          "generated_text_exact": true,
+          "generated_sha_exact": true,
+          "first_token_argmax_exact": true,
+          "max_abs_logit_diff": 0.0,
+          "mean_abs_logit_diff": 0.0,
+          "reference_first_token_argmax": 9454,
+          "switched_first_token_argmax": 9454
+        },
+        "agg_roundtrip": {
+          "generated_text_exact": true,
+          "generated_sha_exact": true,
+          "first_token_argmax_exact": true,
+          "max_abs_logit_diff": 0.0,
+          "mean_abs_logit_diff": 0.0,
+          "reference_first_token_argmax": 2753,
+          "switched_first_token_argmax": 2753
+        }
+      }
+    },
+    "memory": {
+      "gpu": {
+        "index": 0,
+        "name": "NVIDIA RTX 6000 Ada Generation",
+        "total_mib": 48508.9375,
+        "torch": "2.5.1+cu124",
+        "cuda": "12.4",
+        "deterministic_algorithms": false
+      },
+      "base_only": {
+        "allocated_mib": 16722.02978515625,
+        "reserved_mib": 16724.0,
+        "max_allocated_mib": 16722.02978515625,
+        "max_reserved_mib": 16724.0
+      },
+      "base_plus_both_banks": {
+        "allocated_mib": 17599.15283203125,
+        "reserved_mib": 17632.0,
+        "max_allocated_mib": 17599.15283203125,
+        "max_reserved_mib": 17632.0
+      },
+      "base_plus_one_active_note": "same allocation as both GPU-resident banks; activation reuses the active model parameters",
+      "route_peaks": {
+        "general_r0": {
+          "allocated_mib": 17599.1533203125,
+          "reserved_mib": 24010.0,
+          "max_allocated_mib": 22468.80810546875,
+          "max_reserved_mib": 24010.0
+        },
+        "general_r1": {
+          "allocated_mib": 17599.1533203125,
+          "reserved_mib": 24802.0,
+          "max_allocated_mib": 22468.80810546875,
+          "max_reserved_mib": 24802.0
+        },
+        "agg_r0": {
+          "allocated_mib": 17599.1533203125,
+          "reserved_mib": 24802.0,
+          "max_allocated_mib": 22468.80810546875,
+          "max_reserved_mib": 24802.0
+        }
+      },
+      "maximum_observed": {
+        "allocated_mib": 17599.1533203125,
+        "reserved_mib": 24010.0,
+        "max_allocated_mib": 22468.80810546875,
+        "max_reserved_mib": 24010.0
+      },
+      "available_vram_mib": 48508.9375,
+      "vram_margin_mib": 26040.12939453125,
+      "memory_leak": {
+        "roundtrips": 10,
+        "before": {
+          "allocated_mib": 17599.1533203125,
+          "reserved_mib": 17984.0,
+          "max_allocated_mib": 17863.455078125,
+          "max_reserved_mib": 17984.0
+        },
+        "after": {
+          "allocated_mib": 17599.1533203125,
+          "reserved_mib": 17984.0,
+          "max_allocated_mib": 17863.455078125,
+          "max_reserved_mib": 17984.0
+        },
+        "allocated_delta_mib": 0.0,
+        "reserved_delta_mib": 0.0,
+        "trace": [
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          },
+          {
+            "allocated_mib": 17599.1533203125,
+            "reserved_mib": 17984.0,
+            "max_allocated_mib": 17863.455078125,
+            "max_reserved_mib": 17984.0
+          }
+        ],
+        "interpretation": "plateau_required; allocator warmup is not classified as a leak"
+      }
+    },
+    "switch_latency": {
+      "general_to_agg": {
+        "count": 20,
+        "mean_seconds": 0.00384713988751173,
+        "median_seconds": 0.0038542374968528748,
+        "p90_seconds": 0.003864239901304245,
+        "max_seconds": 0.00388495996594429
+      },
+      "agg_to_general": {
+        "count": 20,
+        "mean_seconds": 0.003856331668794155,
+        "median_seconds": 0.0038542337715625763,
+        "p90_seconds": 0.0038783252239227295,
+        "max_seconds": 0.0038985833525657654
+      },
+      "same_specialist_noop": {
+        "count": 20,
+        "mean_seconds": 6.289780139923096e-06,
+        "median_seconds": 6.029382348060608e-06,
+        "p90_seconds": 6.552785634994507e-06,
+        "max_seconds": 8.996576070785522e-06
+      },
+      "median_seconds": 0.0038542356342077255
+    },
+    "release_ready": false
+  },
+  "stage_c_pre_host": {
+    "status": "PASS",
+    "stage": "pre_host",
+    "source_git_commit": "0d1d8d175a88fab8b084503d675e74e906ec5e2c",
+    "source_files_sha256": {
+      "submission/segment-algorithm/Dockerfile": "9a67955d65ec3a1529cc35b1dc50c10a26e57f95a971e16a0aa1929dd96c7a00",
+      "submission/segment-algorithm/requirements.txt": "b6057a102c2f44240a1ca3764f675c0341de45387ffddd567289bbdad035277b",
+      "submission/segment-algorithm/inference.py": "d9987cee141e4a9199dca65be30b74be333530a4f5dc1e139d44c7e2b30fe828",
+      "submission/segment-algorithm/resources/specialist_runtime.py": "a0c91d376690834a0baea244c28c30eea5ce66a6edc10fd84153baf798570e88",
+      "submission/segment-algorithm/resources/final_candidate_config.json": "ee83c8a437aa5fe5ec245fdb0e99c70695c42a04663c7d9506c2c0ea6a45c253",
+      "submission/segment-algorithm/resources/q1_router.py": "5b65a53d0fed0411ecff31b6621a89800fbf3227569a3c30a6c7a8136f67b5e8",
+      "submission/segment-algorithm/resources/q2_siglip_router.py": "0abc0e2e9a0a962b1f5b80bd5deb63822c693151eb41492354ccea0f24196b1c",
+      "submission/segment-algorithm/resources/format_reducer.py": "d0cdbf6ef859beebc1786b2bbb9d39537134b08a8d0fa79d63f4a4249f86f69f"
+    },
+    "submission_tree_audit": {
+      "status": "PASS",
+      "submission_root": ".",
+      "required_files": {
+        ".dockerignore": true,
+        "Dockerfile": true,
+        "requirements.txt": true,
+        "inference.py": true,
+        "resources/final_candidate_config.json": true,
+        "resources/final_provenance_manifest.json": true,
+        "resources/q1_tfidf_r5_router.joblib": true,
+        "resources/q2_siglip_manifest.json": true,
+        "resources/q2_siglip_text_r5.joblib": true,
+        "resources/q2_siglip_router.py": true,
+        "resources/q1_router.py": true,
+        "resources/candidate_policy.py": true,
+        "resources/format_reducer.py": true,
+        "resources/multiple_choice.py": true,
+        "resources/routing.py": true,
+        "resources/specialist_runtime.py": true,
+        "resources/specialist_state.py": true,
+        "resources/specialists/general_final_union_adapted_weights.safetensors": true,
+        "resources/specialists/agg_final_union_adapted_weights.safetensors": true
+      },
+      "runtime_scan_files": [
+        "submission/segment-algorithm/inference.py",
+        "submission/segment-algorithm/resources/__init__.py",
+        "submission/segment-algorithm/resources/candidate_policy.py",
+        "submission/segment-algorithm/resources/format_reducer.py",
+        "submission/segment-algorithm/resources/multiple_choice.py",
+        "submission/segment-algorithm/resources/q1_router.py",
+        "submission/segment-algorithm/resources/q2_siglip_router.py",
+        "submission/segment-algorithm/resources/routing.py",
+        "submission/segment-algorithm/resources/specialist_runtime.py",
+        "submission/segment-algorithm/resources/specialist_state.py",
+        "submission/segment-algorithm/resources/final_candidate_config.json",
+        "submission/segment-algorithm/resources/q2_siglip_manifest.json"
+      ],
+      "runtime_findings": {
+        "SEG007": [],
+        "pilot_checkpoint": [],
+        "step_0512": [],
+        "recovery_checkpoint": [],
+        "external_workspace_runtime_path": [],
+        "training_src_runtime_import": [],
+        "runtime_network_api": []
+      },
+      "runtime_metadata_exemptions": {
+        "submission/segment-algorithm/resources/q2_siglip_manifest.json": [
+          "source"
+        ]
+      },
+      "provenance_only_workspace_reference_count": 10,
+      "provenance_only_paths_exempt_from_runtime_scan": true,
+      "build_context": {
+        "included_file_count": 72,
+        "included_size_bytes": 19185058298,
+        "included_size_gib": 17.86747788824141,
+        "excluded_file_count": 26,
+        "excluded_examples": [
+          "segment-algorithm_2026-09-03T15-49-56.283411919+09-00.tar.gz",
+          "segment-algorithm_2026-09-04T06-25-58.969516586+09-00.tar.gz",
+          "segment-algorithm_2026-09-04T16-18-06.992415173+09-00.tar.gz",
+          "segment-algorithm_2026-09-05T02-19-06.205900059+09-00.tar.gz",
+          "resources/__pycache__/__init__.cpython-311.pyc",
+          "resources/__pycache__/format_reducer.cpython-311.pyc",
+          "resources/__pycache__/model.cpython-311.pyc",
+          "resources/__pycache__/multiple_choice.cpython-311.pyc",
+          "resources/__pycache__/routing.cpython-311.pyc",
+          "resources/__pycache__/q1_router.cpython-311.pyc",
+          "resources/__pycache__/candidate_policy.cpython-311.pyc",
+          "resources/__pycache__/specialist_state.cpython-311.pyc",
+          "resources/__pycache__/q2_siglip_router.cpython-311.pyc",
+          "resources/__pycache__/specialist_runtime.cpython-311.pyc",
+          "test/.gitignore",
+          "test/input/interface_1/FO_definitions.json",
+          "test/input/interface_1/batch.json",
+          "test/input/interface_1/request.json",
+          "test/input/interface_1/overlayed/q001.mp4",
+          "test/input/interface_1/overlayed/q002.mp4",
+          "test/input/interface_1/overlayed/q003.mp4",
+          "test/input/interface_1/plain/q001.mp4",
+          "test/input/interface_1/plain/q002.mp4",
+          "test/input/interface_1/plain/q003.mp4",
+          "test/output/interface_1/answer.json",
+          "__pycache__/inference.cpython-311.pyc"
+        ],
+        "tar_archives_present_but_excluded": [
+          "segment-algorithm_2026-09-03T15-49-56.283411919+09-00.tar.gz",
+          "segment-algorithm_2026-09-04T06-25-58.969516586+09-00.tar.gz",
+          "segment-algorithm_2026-09-04T16-18-06.992415173+09-00.tar.gz",
+          "segment-algorithm_2026-09-05T02-19-06.205900059+09-00.tar.gz"
+        ],
+        "dockerfile_copy_directives": [
+          "COPY --chown=user:user requirements.txt /opt/app/",
+          "COPY --chown=user:user resources/ /opt/app/resources/",
+          "COPY --chown=user:user inference.py /opt/app/"
+        ]
+      },
+      "stale_asset_policy": {
+        "SEG007": "checked",
+        "pilot_checkpoint": "checked",
+        "step_0512": "checked",
+        "recovery_checkpoint": "checked",
+        "optimizer_rng_training_data": "not present in build context by inventory"
+      }
+    },
+    "offline_asset_audit": {
+      "status": "PASS",
+      "model_revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+      "model_snapshot": {
+        "path": "resources/qwen3-vl-8b",
+        "required_files": {
+          "config.json": true,
+          "generation_config.json": true,
+          "preprocessor_config.json": true,
+          "video_preprocessor_config.json": true,
+          "tokenizer_config.json": true,
+          "tokenizer.json": true,
+          "merges.txt": true,
+          "vocab.json": true,
+          "chat_template.json": true,
+          "model.safetensors.index.json": true,
+          "model-00001-of-00004.safetensors": true,
+          "model-00002-of-00004.safetensors": true,
+          "model-00003-of-00004.safetensors": true,
+          "model-00004-of-00004.safetensors": true
+        },
+        "total_bytes": 17545907231
+      },
+      "q2_encoder": {
+        "path": "resources/q2_siglip_base_patch16_384",
+        "required_files": {
+          ".gitattributes": true,
+          "README.md": true,
+          "config.json": true,
+          "model.safetensors": true,
+          "preprocessor_config.json": true,
+          "special_tokens_map.json": true,
+          "spiece.model": true,
+          "tokenizer.json": true,
+          "tokenizer_config.json": true
+        },
+        "total_bytes": 817044812
+      },
+      "other_assets": {
+        "q1_tfidf_r5_router.joblib": true,
+        "q2_siglip_manifest.json": true,
+        "q2_siglip_text_r5.joblib": true,
+        "final_candidate_config.json": true,
+        "final_provenance_manifest.json": true
+      },
+      "specialists": {
+        "general": {
+          "path": "resources/specialists/general_final_union_adapted_weights.safetensors",
+          "exists": true,
+          "bytes": 410642584,
+          "sha256": "b77f1627709032f80d7c105e877a45330551de7a88a5cbfb1ccf52e83d4ef7f7",
+          "config_sha256": "b77f1627709032f80d7c105e877a45330551de7a88a5cbfb1ccf52e83d4ef7f7"
+        },
+        "agg": {
+          "path": "resources/specialists/agg_final_union_adapted_weights.safetensors",
+          "exists": true,
+          "bytes": 410642584,
+          "sha256": "724ec447dbba79ff902422f34d0ae14801e8de4d318be7f8474b45bd30a91739",
+          "config_sha256": "724ec447dbba79ff902422f34d0ae14801e8de4d318be7f8474b45bd30a91739"
+        }
+      },
+      "runtime_network_contract": {
+        "HF_HUB_OFFLINE": "set in Dockerfile",
+        "TRANSFORMERS_OFFLINE": "set in Dockerfile",
+        "local_files_only": "present on all runtime from_pretrained calls",
+        "runtime_download": false
+      }
+    },
+    "dependency_audit": {
+      "status": "PASS",
+      "docker_base_image": "pytorch/pytorch:2.11.0-cuda12.8-cudnn9-runtime",
+      "declared_requirements": [
+        "torch==2.11.0",
+        "orena-focus==0.3.5",
+        "transformers==5.14.1",
+        "sentencepiece==0.2.2",
+        "protobuf==7.35.1",
+        "accelerate>=1.1.0,<2.0.0",
+        "safetensors>=0.8.0",
+        "Pillow>=10.0.0,<16.0.0",
+        "numpy>=1.26.0,<3.0.0",
+        "scikit-learn==1.9.0",
+        "joblib==1.5.3",
+        "decord==0.6.0"
+      ],
+      "devcontainer_versions": {
+        "torch": "2.5.1+cu124",
+        "transformers": "5.14.1",
+        "safetensors": "0.8.0",
+        "scikit-learn": "1.9.0",
+        "joblib": "1.5.3",
+        "decord": "0.6.0",
+        "Pillow": "10.2.0",
+        "numpy": "2.1.2",
+        "orena-focus": "0.3.5",
+        "accelerate": "1.14.0",
+        "sentencepiece": "0.2.2",
+        "protobuf": "7.35.1"
+      },
+      "devcontainer_cuda": "12.4",
+      "material_environment_gap": {
+        "stage_b_dev_torch": "2.5.1+cu124",
+        "docker_declared_torch": "2.11.0 in CUDA 12.8 base",
+        "compatibility_status": "DEFERRED_TO_HOST_DOCKER"
+      },
+      "no_dependency_upgrade_performed": true
+    },
+    "cpu_tests": {
+      "status": "PASS",
+      "returncode": 0,
+      "elapsed_seconds": 209.8327970393002,
+      "tests": [
+        "tests/test_submission_segment.py",
+        "tests/test_seg010_specialist_runtime.py",
+        "tests/test_seg010_precompletion_safety.py",
+        "tests/test_seg010_precompletion_submission.py",
+        "tests/test_seg010_pre_final_cpu_verification.py",
+        "tests/test_seg010_prompt_spec.py",
+        "tests/test_seg010_sampling.py",
+        "tests/test_seg010_question_router.py"
+      ],
+      "stdout_tail": ".........................................                                [100%]\n41 passed in 208.12s (0:03:28)\n",
+      "stderr_tail": "",
+      "cuda_hidden": true
+    },
+    "local_non_docker_e2e": {
+      "status": "PASS",
+      "entrypoint": "submission/segment-algorithm/inference.py:run",
+      "return_code": 0,
+      "error": null,
+      "request_count": 5,
+      "qids": [
+        "c_agg_r0",
+        "c_temporal_r0",
+        "c_other_r1",
+        "c_stress_r0",
+        "c_stress_r1"
+      ],
+      "expected_qids": [
+        "c_agg_r0",
+        "c_temporal_r0",
+        "c_other_r1",
+        "c_stress_r0",
+        "c_stress_r1"
+      ],
+      "empty_answers": [],
+      "logged_routes": {
+        "c_agg_r0": "Route_A_AGG_R0",
+        "c_temporal_r0": "Route_B_GENERAL_R0",
+        "c_other_r1": "Route_C_GENERAL_R1",
+        "c_stress_r0": "Route_B_GENERAL_R0",
+        "c_stress_r1": "Route_C_GENERAL_R1"
+      },
+      "expected_routes": {
+        "c_agg_r0": "Route_A_AGG_R0",
+        "c_temporal_r0": "Route_B_GENERAL_R0",
+        "c_other_r1": "Route_C_GENERAL_R1",
+        "c_stress_r0": "Route_B_GENERAL_R0",
+        "c_stress_r1": "Route_C_GENERAL_R1"
+      },
+      "route_match": {
+        "c_agg_r0": true,
+        "c_temporal_r0": true,
+        "c_other_r1": true,
+        "c_stress_r0": true,
+        "c_stress_r1": true
+      },
+      "route_set": [
+        "Route_A_AGG_R0",
+        "Route_B_GENERAL_R0",
+        "Route_C_GENERAL_R1"
+      ],
+      "route_coverage_pass": true,
+      "output_schema_pass": true,
+      "setup_seconds": 10.784196309745312,
+      "per_question_latencies_seconds": [
+        1.0719734877347946,
+        0.6721801273524761,
+        0.3416516147553921,
+        12.085818842053413,
+        9.893541909754276
+      ],
+      "max_question_seconds": 12.085818842053413,
+      "all_questions_under_15_seconds": true,
+      "pooled_budget_seconds": 195.0,
+      "pooled_margin_seconds": 159.8117782995105,
+      "pooled_budget_pass": true,
+      "total_wall_seconds": 35.18822170048952,
+      "peak_allocated_mib": 22501.0087890625,
+      "gpu": "NVIDIA RTX 6000 Ada Generation",
+      "stress_fixture": "<private-runtime-fixture>/heico__2684312.mp4",
+      "request_policy": "5 fixed requests; 3 route coverage + long R0/R1 stress"
+    },
+    "host_handoff": {
+      "official_source": "https://github.com/IMSY-DKFZ/orena-focus-submission-template",
+      "official_workflow": [
+        "./do_build.sh",
+        "./do_test_run.sh",
+        "./do_save.sh"
+      ],
+      "official_image_tag": "segment-algorithm",
+      "do_test_run_rebuilds": true,
+      "do_save_rebuilds": true,
+      "post_save_direct_run": {
+        "required": true,
+        "rebuild": false,
+        "target": "segment-algorithm"
+      }
+    },
+    "provenance_artifacts": {
+      "source_state": {
+        "git_commit": "0d1d8d175a88fab8b084503d675e74e906ec5e2c"
+      },
+      "docker_image": {
+        "status": "PENDING_HOST_DOCKER",
+        "tag": null,
+        "id": null,
+        "digest": null
+      },
+      "submission_archive": {
+        "status": "PENDING_HOST_DOCKER",
+        "path": null,
+        "size": null,
+        "sha256": null
+      }
+    },
+    "docker_cli_executed_by_codex": false,
+    "host_docker_status": "PENDING_HOST_DOCKER",
+    "release_ready": false
+  }
+}

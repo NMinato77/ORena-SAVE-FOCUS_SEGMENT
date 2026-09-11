@@ -1,0 +1,34 @@
+# Pins the torch already in the base image — the recommended CUDA 12.8 build (see
+# the Dockerfile for why it is the default). Nothing is downloaded: pip treats the
+# preinstalled build as satisfying this. Its only job is to turn "a dependency of
+# mine wants a different torch" into an immediate, readable pip error naming that
+# dependency, rather than a silent swap to the CUDA 13.0 wheel that cannot run on
+# the L40S. Changing torch is allowed — if you do, edit this pin knowingly, and the
+# Dockerfile's guard will tell you whether the result still suits the GPU you target.
+# torch is supplied by the official CUDA 12.8 base image. Keep this pin so
+# dependency resolution cannot silently replace it with a different CUDA wheel.
+torch==2.11.0
+
+orena-focus==0.3.5
+transformers==5.14.1
+# SigLIP's processor lazily constructs a SentencePiece-backed tokenizer.
+# Keep this explicit because transformers does not install this optional
+# tokenizer backend as a dependency.
+sentencepiece==0.2.2
+# SigLIP's tokenizer also imports protobuf at runtime; transformers exposes
+# this as part of its optional sentencepiece extra, so declare it explicitly.
+protobuf==7.35.1
+accelerate>=1.1.0,<2.0.0
+safetensors>=0.8.0
+Pillow>=10.0.0,<16.0.0
+numpy>=1.26.0,<3.0.0
+
+# Q1-R5 question-only production router.  These versions match the frozen
+# bundle's development environment and are intentionally explicit so the
+# serialized sklearn estimator is loaded by a compatible runtime.
+scikit-learn==1.9.0
+joblib==1.5.3
+
+# Direct imports of inference.py. decord is deliberately used instead of a
+# custom decoder so the official template's batched-read contract is retained.
+decord==0.6.0

@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "design_version": "SEGMENT_P2_T0_v1",
+  "candidate_id": "SEG010_H2_P2_T0_specialist_v1",
+  "activation_status": "h2_active_with_q1_r5_startup_fallback",
+  "training_protection": {
+    "active_final_general_training_must_remain_untouched": true,
+    "final_weights_bound": true,
+    "final_candidate_mode": true
+  },
+  "router": {
+    "id": "H2",
+    "input": "question_only",
+    "priority": [
+      "q2_aggregation",
+      "q0_or_q1_temporal",
+      "general_default"
+    ],
+    "policy": {
+      "route_a": "if Q2 == aggregation",
+      "route_b": "elif Q0 == temporal OR Q1 == temporal",
+      "route_c": "else"
+    },
+    "q2_packaging_gate": "passed_cpu_offline_smoke_and_exact_resource_manifest",
+    "startup_failure_fallback": "Q1-R5",
+    "fallback_chain": [
+      "H2",
+      "Q1-R5",
+      "Q0_RULE"
+    ],
+    "fallback_trigger": "startup_or_resource_failure_only",
+    "per_question_fallback": false
+  },
+  "routes": {
+    "A": {
+      "name": "Route_A_AGG_R0",
+      "specialist": "agg",
+      "resolution_policy": "R0",
+      "sampling_policy": "fixed_1fps_then_endpoint_preserving_uniform_240",
+      "max_frames": 240,
+      "max_pixels": 50176
+    },
+    "B": {
+      "name": "Route_B_GENERAL_R0",
+      "specialist": "general",
+      "resolution_policy": "R0",
+      "sampling_policy": "fixed_1fps_then_endpoint_preserving_uniform_240",
+      "max_frames": 240,
+      "max_pixels": 50176
+    },
+    "C": {
+      "name": "Route_C_GENERAL_R1",
+      "specialist": "general",
+      "resolution_policy": "R1_BALANCED",
+      "sampling_policy": "R0_timeline_then_endpoint_preserving_half",
+      "max_frames": 240,
+      "max_pixels": 100352
+    }
+  },
+  "sampling": {
+    "source_fps": 5.0,
+    "r0": {
+      "timeline": "clip_relative_fixed_1fps",
+      "cap": 240,
+      "cap_rule": "floor(i * (n - 1) / (m - 1))",
+      "max_pixels": 50176,
+      "endpoint_preserving": true
+    },
+    "r1": {
+      "source": "R0_timeline",
+      "target_count": "max(2, ceil(len(R0) / 2)) when len(R0) >= 2",
+      "cap_rule": "floor(i * (n - 1) / (m - 1))",
+      "max_pixels": 100352,
+      "endpoint_preserving": true
+    },
+    "legacy_sampling_paths": "retained_for_historical_compatibility_and_not_part_of_H2_candidate"
+  },
+  "prompt": {
+    "segment_evidence_instruction_id": "P2",
+    "segment_evidence_instruction": "Use the sampled frames as visual evidence. Base visual claims on the frames. When the question explicitly asks about typical surgical use, clinical context, or what usually occurs, you may also use your general surgical knowledge.",
+    "frame_evidence_instruction_id": "P2_FRAME",
+    "frame_evidence_instruction": "Use the provided frame as visual evidence. Base visual claims on the frame. When the question explicitly asks about typical surgical use, clinical context, or what usually occurs, you may also use your general surgical knowledge.",
+    "timestamp_variant": "T0",
+    "timestamp_context": "Sampled-frame timestamps are absolute source-procedure timeline timestamps."
+  },
+  "generation": {
+    "max_new_tokens": 128,
+    "do_sample": false,
+    "decoder": "greedy",
+    "question_only_reducer": true,
+    "reference_answer_format_used_at_inference": false
+  },
+  "specialists": {
+    "binding_status": "RUNTIME_FORWARD_BOUND_STAGE_B",
+    "current_interim_model_behavior": "one shared frozen base with GENERAL/AGG LMV banks; complete switch plus CUDA synchronize before identity update; activation failure is fatal; fail closed",
+    "runtime_binding": {
+      "status": "IMPLEMENTED_STAGE_B",
+      "source": "resources/specialist_runtime.py",
+      "shared_base": true,
+      "bank_storage": "ordinary tensors; not registered as model parameters",
+      "active_state_tensor_count": 560,
+      "activation_failure": "fatal_process_exit_without_fallback"
+    },
+    "general": {
+      "scope": "LMV",
+      "trainable_tensor_count": 560,
+      "trainable_parameter_count": 205284608,
+      "required_components": [
+        "language_lora",
+        "vision_lora",
+        "merger"
+      ],
+      "checkpoint": "specialists/general_final_union_adapted_weights.safetensors",
+      "sha256": "b77f1627709032f80d7c105e877a45330551de7a88a5cbfb1ccf52e83d4ef7f7"
+    },
+    "agg": {
+      "scope": "LMV",
+      "trainable_tensor_count": 560,
+      "trainable_parameter_count": 205284608,
+      "required_components": [
+        "language_lora",
+        "vision_lora",
+        "merger"
+      ],
+      "checkpoint": "specialists/agg_final_union_adapted_weights.safetensors",
+      "sha256": "724ec447dbba79ff902422f34d0ae14801e8de4d318be7f8474b45bd30a91739"
+    }
+  },
+  "output": {
+    "contract": "Response(qID, content, latency)",
+    "path": "/output/answer.json",
+    "one_response_per_request": true
+  },
+  "provenance": {
+    "prompt_source": "configs/segment_prompt_defaults.json",
+    "sampling_source": "src/orena_procedure/seg010_sampling.py",
+    "router_evidence": "notes/seg010_cross_timescale/router_h2_rescue_analysis_v1.md",
+    "preflight_report": "notes/seg010_cross_timescale/precompletion_submission_update_v1.md",
+    "historical_artifacts_immutable": true
+  }
+}
