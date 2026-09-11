@@ -1,11 +1,12 @@
 # ORena SAVE FOCUS — SEGMENT Track
 
-このrepositoryは、[ORena SAVE FOCUS Challenge — SEGMENT Track](https://segment.orena-focus-challenge.org/)
-に提出した`segment-algorithm`の公開用source snapshotです。
+This repository is the public source snapshot of the `segment-algorithm`
+submission for the [ORena SAVE FOCUS Challenge — SEGMENT Track](https://segment.orena-focus-challenge.org/).
 
-Docker submissionのentrypoint、推論処理、routing、format reducer、設定、
-official sample fixtureを含みます。開発用の実験履歴・dataset・checkpointは
-含めていません。
+It contains the Docker submission entrypoint, inference code, routing,
+format reduction, configuration, and official sample fixtures. Development
+experiment history, datasets, and checkpoints are not included.
 
-Qwen/SigLIPの大容量offline model assetsとfinal specialist weightsはGitHubへ
-格納せず、`prepare_assets.sh`でbuild前にローカルから用意する構成です。
+Large Qwen/SigLIP offline model assets and final specialist weights are not
+stored in GitHub. They are supplied locally before the image is built by
+`prepare_assets.sh`.
