@@ -64,6 +64,12 @@ class PublicReleaseContractTests(unittest.TestCase):
         for entry in ("*.tar.gz", "test/", "tests/", "training/", "docs/"):
             self.assertIn(entry, dockerignore)
 
+    def test_generated_submission_staging_assets_are_not_tracked(self) -> None:
+        gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+        self.assertIn("resources/specialists/", gitignore)
+        self.assertIn("resources/qwen3-vl-8b/", gitignore)
+        self.assertIn("resources/q2_siglip_base_patch16_384/", gitignore)
+
     def test_public_runtime_has_no_private_absolute_paths(self) -> None:
         forbidden = ("/home/minato/", "/mnt/cloudy", "/data0/", "/workspace/")
         suffixes = {".py", ".sh", ".md", ".json", ".txt", ".gitattributes", ".gitignore"}
