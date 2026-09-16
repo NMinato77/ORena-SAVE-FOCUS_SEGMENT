@@ -3,6 +3,7 @@
 # (and the sample batch) to the daemon on every build.
 *.tar.gz
 test/
+tests/
 __pycache__/
 training/
 docs/

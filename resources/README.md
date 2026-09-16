@@ -1,10 +1,10 @@
 # `resources/` — offline model assets
 
 Everything in this folder is **copied into the container image** at build time and
-is available at inference. `prepare_assets.sh` materializes the model snapshot
-from an external cache before `do_build.sh`. Large model assets are intentionally
-not committed to this public source repository; they must be supplied locally
-when building the offline image.
+is available at inference. `do_build.sh` invokes `prepare_assets.sh` to
+materialize the model snapshot from an external cache. Large model assets are
+intentionally not committed to this public source repository; they must be
+supplied locally when building the offline image.
 
 | File | What it is | Replace it? |
 |:--|:--|:--|
@@ -59,8 +59,8 @@ That pull is infrastructure overhead and is not charged against your latency
 budget, but it does slow every submission cycle, so keep the image only as large as
 it needs to be.
 
-`prepare_assets.sh` supports both execution contexts. Inside the DevContainer it
-uses the standard `/cache` mount; on the host it automatically resolves the sibling
-`../cache` directory and the repository's `outputs/` directory. Set
+`prepare_assets.sh` uses `/cache` by default for the public Qwen and SigLIP
+assets. Set `SEGMENT_CACHE_ROOT` to use another cache root, or set
 `QWEN_MODEL_PATH`, `Q2_ENCODER_PATH`, and/or `Q2_ROUTER_PATH` explicitly when
-the host storage layout differs.
+the storage layout differs. The specialist defaults are the released files in
+`training/weights/`; no private `outputs/` directory is required.

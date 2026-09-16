@@ -93,11 +93,25 @@ locally and are not copied into the Docker image.
 
 ## Submission image
 
-For the offline submission image, run `prepare_assets.sh` before
-`do_build.sh`. It copies the locally available Qwen and SigLIP assets and the
-released specialist packs into `resources/`. The Docker image remains an
-inference-only artifact and does not execute training code.
+For the offline submission image, run `do_build.sh`. It automatically invokes
+`prepare_assets.sh` to copy the locally available Qwen and SigLIP assets and
+the released specialist packs into `resources/` before building the image. The
+Docker image remains an inference-only artifact and does not execute training
+code.
 
 The submission runs without network access and uses a single GPU, as required
 by the SEGMENT track. No development-only absolute host paths are required at
 inference time.
+
+## Local release checks
+
+The CPU-only release contract checks can be run with `pytest` from the
+repository root:
+
+```bash
+pytest -q tests/test_public_release.py
+```
+
+These checks validate the build chain, portable training manifests, asset
+staging, recorded hashes, shell syntax, and the absence of private absolute
+paths. They do not build the Docker image or require a GPU.
