@@ -3,7 +3,9 @@
 set -euo pipefail
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-REPO_ROOT=$(cd -- "${SCRIPT_DIR}/../.." &>/dev/null && pwd)
+REPO_ROOT="$SCRIPT_DIR"
+WORKSPACE_ROOT="${SEGMENT_WORKSPACE_ROOT:-/workspace}"
+CACHE_ROOT="${SEGMENT_CACHE_ROOT:-/cache}"
 RESOURCES_DIR="${SCRIPT_DIR}/resources"
 MODEL_DEST="${RESOURCES_DIR}/qwen3-vl-8b"
 Q2_ENCODER_DEST="${RESOURCES_DIR}/q2_siglip_base_patch16_384"
@@ -14,27 +16,27 @@ AGG_SPECIALIST_DEST="${SPECIALISTS_DEST}/agg_final_union_adapted_weights.safeten
 
 MODEL_RELATIVE_PATH="huggingface/hub/models--Qwen--Qwen3-VL-8B-Instruct/snapshots/0c351dd01ed87e9c1b53cbc748cba10e6187ff3b"
 Q2_ENCODER_RELATIVE_PATH="models/siglip-base-patch16-384"
-Q2_ROUTER_RELATIVE_PATH="outputs/SEG010_cross_timescale_21way_v1/question_router_v1/models/q2_siglip_text_r5.joblib"
-GENERAL_SPECIALIST_RELATIVE_PATH="outputs/SEG010_FINAL_v4/checkpoints/GENERAL_FINAL/union_adapted_weights.safetensors"
-AGG_SPECIALIST_RELATIVE_PATH="outputs/SEG010_AGG_FINAL_v4/checkpoints/AGG_FINAL/union_adapted_weights.safetensors"
+Q2_ROUTER_RELATIVE_PATH="resources/q2_siglip_text_r5.joblib"
+GENERAL_SPECIALIST_RELATIVE_PATH="training/weights/general_final_union_adapted_weights.safetensors"
+AGG_SPECIALIST_RELATIVE_PATH="training/weights/agg_final_union_adapted_weights.safetensors"
 
-# The DevContainer mounts host-side ``orena/cache`` as /cache and the
-# repository as /workspace. When this script runs directly on the host,
-# neither container path exists; the sibling cache and repository-relative
-# checkpoint do. Explicit environment variables remain the highest priority.
+# The standard setup mounts the external model cache at /cache. If that mount
+# is not present, SEGMENT_WORKSPACE_ROOT/cache is used. Explicit environment
+# variables remain the highest priority, so this script also works from a
+# standalone clone without exposing any host-specific workspace path.
 if [[ -n "${QWEN_MODEL_PATH:-}" ]]; then
   MODEL_SOURCE="$QWEN_MODEL_PATH"
-elif [[ -d "/cache/${MODEL_RELATIVE_PATH}" ]]; then
-  MODEL_SOURCE="/cache/${MODEL_RELATIVE_PATH}"
+elif [[ -d "${CACHE_ROOT}/${MODEL_RELATIVE_PATH}" ]]; then
+  MODEL_SOURCE="${CACHE_ROOT}/${MODEL_RELATIVE_PATH}"
 else
-  MODEL_SOURCE="${REPO_ROOT}/../cache/${MODEL_RELATIVE_PATH}"
+  MODEL_SOURCE="${WORKSPACE_ROOT}/cache/${MODEL_RELATIVE_PATH}"
 fi
 if [[ -n "${Q2_ENCODER_PATH:-}" ]]; then
   Q2_ENCODER_SOURCE="$Q2_ENCODER_PATH"
-elif [[ -d "/cache/${Q2_ENCODER_RELATIVE_PATH}" ]]; then
-  Q2_ENCODER_SOURCE="/cache/${Q2_ENCODER_RELATIVE_PATH}"
+elif [[ -d "${CACHE_ROOT}/${Q2_ENCODER_RELATIVE_PATH}" ]]; then
+  Q2_ENCODER_SOURCE="${CACHE_ROOT}/${Q2_ENCODER_RELATIVE_PATH}"
 else
-  Q2_ENCODER_SOURCE="${REPO_ROOT}/../cache/${Q2_ENCODER_RELATIVE_PATH}"
+  Q2_ENCODER_SOURCE="${WORKSPACE_ROOT}/cache/${Q2_ENCODER_RELATIVE_PATH}"
 fi
 if [[ -n "${Q2_ROUTER_PATH:-}" ]]; then
   Q2_ROUTER_SOURCE="$Q2_ROUTER_PATH"

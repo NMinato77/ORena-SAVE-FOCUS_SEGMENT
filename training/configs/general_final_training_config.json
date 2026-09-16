@@ -1,0 +1,217 @@
+{
+  "design_version": "SEG010_FINAL_TRAINING_PREFLIGHT_scaled_transfer_v2",
+  "base_model": {
+    "id": "Qwen/Qwen3-VL-8B-Instruct",
+    "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+    "dtype": "bfloat16"
+  },
+  "prompt_timestamp": {
+    "schema_version": 1,
+    "design_version": "SEGMENT_P2_T0_v1",
+    "scope": "SEGMENT default and FRAME semantic counterpart",
+    "default_policy": {
+      "status": "active_until_explicitly_revised",
+      "applies_to": [
+        "SEG010 and later new SEGMENT experiments",
+        "SEGMENT ablations",
+        "SEGMENT continuations",
+        "SEGMENT production candidates"
+      ],
+      "segment_default": {
+        "evidence_instruction_ref": "segment.evidence_instruction",
+        "timestamp_variant_ref": "segment.timestamp_variant"
+      },
+      "frame_default": {
+        "evidence_instruction_ref": "frame.evidence_instruction",
+        "timestamp_variant": null
+      },
+      "explicit_revision_required_for": [
+        "P0 or P1 evidence instruction",
+        "T1 compact timestamp serialization",
+        "independent prompt wording",
+        "independent timestamp serialization"
+      ],
+      "revision_record_must_include": [
+        "reason",
+        "before_and_after_specification",
+        "comparison_basis_against_P2_T0",
+        "train_eval_compatibility",
+        "downstream_experiment_impact",
+        "new_design_version"
+      ],
+      "historical_artifacts": "Preserve historical configs and raw artifacts with the specification actually used."
+    },
+    "segment": {
+      "evidence_instruction_id": "P2",
+      "evidence_instruction": "Use the sampled frames as visual evidence. Base visual claims on the frames. When the question explicitly asks about typical surgical use, clinical context, or what usually occurs, you may also use your general surgical knowledge.",
+      "timestamp_variant": "T0",
+      "timestamp_frame_template": "Frame timestamp (absolute source-procedure timeline): {timestamp:.1f} seconds.",
+      "timestamp_context": "Sampled-frame timestamps are absolute source-procedure timeline timestamps."
+    },
+    "frame": {
+      "evidence_instruction_id": "P2_FRAME",
+      "evidence_instruction": "Use the provided frame as visual evidence. Base visual claims on the frame. When the question explicitly asks about typical surgical use, clinical context, or what usually occurs, you may also use your general surgical knowledge."
+    },
+    "selection": {
+      "preregistered_selection": {
+        "segment_evidence_instruction": "P0",
+        "timestamp_serialization": "T0"
+      },
+      "final_design_selection": {
+        "segment_evidence_instruction": "P2",
+        "timestamp_serialization": "T0"
+      },
+      "rationale": "P2 was selected as the final engineering/design choice because it is semantically aligned with knowledge-demand questions while the pre-registered strict gate result remains P0. T0 is retained because T1 regressed NLL in every major subset under the available matched setting."
+    },
+    "preflight": {
+      "report": "notes/seg010_prompt_preflight.md",
+      "artifact_root": "outputs/SEG010_prompt_preflight_v1",
+      "raw_results_immutable": true
+    }
+  },
+  "loss": {
+    "training": "unweighted answer+EOT mean NLL (W0; no loss weighting)",
+    "evaluation_primary": "answer-content NLL; capability x dataset cell means equally macro-averaged"
+  },
+  "optimizer": {
+    "type": "AdamW",
+    "weight_decay": 0.01,
+    "scheduler": null,
+    "gradient_clipping": null,
+    "learning_rates": {
+      "language_lora": 0.0001,
+      "vision_lora": 1e-05,
+      "merger_full": 5e-05
+    },
+    "bf16": true
+  },
+  "batch": {
+    "global_batch": 8,
+    "microbatch_per_gpu": 1,
+    "world_size": 4,
+    "gradient_accumulation": 2
+  },
+  "prefetch": {
+    "selected": "PF-C_main_decode",
+    "candidate": "PF-C_main_decode",
+    "status": "previous_verified_gate_pass_not_rerun",
+    "queue_depth": 1,
+    "producer": "background PIL+processor; main-thread PyNvVideoCodec decode",
+    "consumer": "main-thread H2D+forward/backward+optimizer+DDP",
+    "processor_on_consumer": false,
+    "previous_gate_artifact": "not bundled; historical PF-C gate artifact"
+  },
+  "checkpoint_paths": {
+    "stage1": "not included in release; reproducible from canonical initialization",
+    "stage2_final": "training/weights/general_final_union_adapted_weights.safetensors"
+  },
+  "experiment": "SEG010_general_final_nonaggregation",
+  "training_scope": "non-Aggregation only",
+  "partition": {
+    "qa": 18227,
+    "source_manifest": "training/artifacts/final_manifests/general_nonagg_source_manifest.jsonl"
+  },
+  "sampling_training": {
+    "fps": 1.0,
+    "max_frames": 240,
+    "max_pixels": 50176,
+    "prompt": "P2",
+    "timestamp": "T0",
+    "policy": "S0_FIXED_1FPS"
+  },
+  "stage1": {
+    "schedule": "repeat F,F,S",
+    "nominal": {
+      "FRAME": 36454,
+      "SEGMENT": 18227
+    },
+    "actual": {
+      "FRAME": 36464,
+      "SEGMENT": 18232
+    },
+    "updates": {
+      "FRAME": 4558,
+      "SEGMENT": 2279,
+      "total": 6837
+    },
+    "frame_stream_sha256": "891b997241397bc0bde3e8040c8d105587dcc40b9c76532a748d8d20fccf252c",
+    "segment_stream_sha256": "8a6eba5b47aaabdd43d363163ca1fe1aec0bc0e1729f682d9e6a4b9eb22f1762",
+    "padding": {
+      "seed": 11011,
+      "nominal_exposures": 18227,
+      "actual_exposures": 18232,
+      "padding_exposures": 5,
+      "coverage_before_padding": 18227,
+      "order_sha256": "cdf9618363d8a152e18b7958fc914e9ce2749af2ab25536be45816b6c2b8fe8a"
+    }
+  },
+  "stage2": {
+    "schedule": "SEGMENT-only",
+    "nominal": {
+      "SEGMENT": 18227
+    },
+    "actual": {
+      "SEGMENT": 18232
+    },
+    "updates": 2279,
+    "segment_stream_sha256": "b38d7550de285b178385421df4b9028aa595494e2fc81c3efd94c4443312e3fd",
+    "padding": {
+      "seed": 11012,
+      "nominal_exposures": 18227,
+      "actual_exposures": 18232,
+      "padding_exposures": 5,
+      "coverage_before_padding": 18227,
+      "order_sha256": "b89644952dccdf90d4e6aa857c0f5a8af639dfe639e354d8ffd3ac10fd249d63"
+    },
+    "optimizer_continuity": "SEGMENT optimizer/moments continue from Stage 1; no reset"
+  },
+  "cumulative_actual_exposure": {
+    "FRAME": 36464,
+    "SEGMENT": 36464,
+    "ratio": "1:1"
+  },
+  "ps_audit": {
+    "full_frame_source_qa": 20000,
+    "full_frame_source_unique_qa": 20000,
+    "frame_train_qa": 13748,
+    "validation_overlap_qa": 3048,
+    "validation_overlap_videos": 38,
+    "full_ps_pool_qa": 10073,
+    "full_ps_pool_unique_videos": 130,
+    "nominal_exposures": 36454,
+    "actual_exposures": 36464,
+    "padding_exposures": 10,
+    "complete_cycles": 3,
+    "partial_cycle_exposures": 6235,
+    "min_repetition": 3,
+    "median_repetition": 4.0,
+    "mean_repetition": 3.6199741884245014,
+    "max_repetition": 5,
+    "cycle_order_sha256": [
+      "5d3217a5d8cf00c7e948ba688589f99ae57c5c0dde68dee428b31ea9192605d8",
+      "5d3217a5d8cf00c7e948ba688589f99ae57c5c0dde68dee428b31ea9192605d8",
+      "5d3217a5d8cf00c7e948ba688589f99ae57c5c0dde68dee428b31ea9192605d8"
+    ],
+    "replacement_policy": "complete deterministic full-pool cycles plus one deterministic stratified partial cycle; no replacement within a cycle; replacement only across cycles",
+    "answer_or_model_dependent": false,
+    "original_reconstruction": {
+      "pool_train_rows": 7025,
+      "eligible_train_rows": 13748,
+      "heldout_video_count": 38,
+      "original_rows": 2048,
+      "exact_row_order_match": true,
+      "exact_qid_set_match": true,
+      "original_sha256": "59dcdd0532f48113f4d9e42b584b42fade5754ccd841143d63d025b67af45e2d",
+      "selection_fields": [
+        "dataset",
+        "procedure_type",
+        "videoID",
+        "rule",
+        "answer_format",
+        "supervision_contract"
+      ],
+      "selection_seed": 11011,
+      "replacement_original": false
+    }
+  }
+}

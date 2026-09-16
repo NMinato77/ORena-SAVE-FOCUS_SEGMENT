@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "experiment": "SEG010",
+  "kind": "canonical_union_initialization",
+  "model": {
+    "id": "Qwen/Qwen3-VL-8B-Instruct",
+    "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+    "dtype": "bfloat16"
+  },
+  "seed": 11011,
+  "challenge_finetuning": "none",
+  "artifact_conditions_sha256": "a3f74edc4a1bfb9a3c34db1231536df73eec92b37183c3c2641c394f24b199be",
+  "artifact_scopes_sha256": "bebc878c0dd661b4b36cc390e688bf0be27e4677b77c2a1af9a3a7dad4dad5af",
+  "union_parameter_count": 205284608,
+  "tensor_sha256": "4e3a394b4f2d3d61a8cce8ca78fbd3ea289762b81e2213ee6d753f6d9fd6f10c",
+  "weights_file": "union_adapted_weights.safetensors",
+  "weights_sha256": "3442593eaa7602a308c276028bef2cc16ae0a4c0eaa87996efbf314baca467c3"
+}

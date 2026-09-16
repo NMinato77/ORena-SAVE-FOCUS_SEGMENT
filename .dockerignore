@@ -4,3 +4,5 @@
 *.tar.gz
 test/
 __pycache__/
+training/
+docs/
