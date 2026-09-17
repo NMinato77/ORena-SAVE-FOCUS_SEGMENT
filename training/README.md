@@ -1,9 +1,10 @@
-# Final SEG010 training package
+# Public training package
 
-This directory is the public training implementation for the final SEG010
-General and Aggregation specialists. The historical experiment filenames are
-kept in provenance outside this public entry point; the supported public
-entry point is `train.py`.
+This directory contains the public training implementation for the General
+and Aggregation specialists. Some filenames, configuration keys, and default
+output directories retain `SEG010` from the internal experiment history;
+these are legacy identifiers, not a separate public training mode. The
+supported public entry point is `train.py`.
 
 These historical-named modules are retained as internal dependencies of the
 final trainer; `training/train.py` is the supported public entry point.
@@ -53,7 +54,7 @@ torchrun --standalone --nproc_per_node=4 training/train.py \
   --output-dir outputs/SEG010_FINAL_AGGREGATION
 ```
 
-The recipes use the final SEG010 contract:
+The recipes use the final training contract:
 
 - Qwen3-VL-8B-Instruct at the pinned revision, BF16
 - P2 evidence instruction and T0 absolute source-procedure timestamps
