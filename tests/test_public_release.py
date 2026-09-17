@@ -101,6 +101,19 @@ class PublicReleaseContractTests(unittest.TestCase):
         self.assertEqual(release["validation"]["official_test_run"]["status"], "PASS")
         self.assertFalse((ROOT / "resources/final_provenance_manifest.json").exists())
 
+    def test_public_candidate_provenance_is_resolved_or_explicitly_historical(self) -> None:
+        config = read_json(ROOT / "resources/final_candidate_config.json")
+        provenance = config["provenance"]
+        self.assertEqual(
+            provenance["prompt_source"],
+            "training/configs/segment_prompt_defaults.json",
+        )
+        self.assertTrue((ROOT / provenance["prompt_source"]).is_file())
+        self.assertEqual(provenance["sampling_source"], "inference.py")
+        self.assertTrue((ROOT / provenance["sampling_source"]).is_file())
+        self.assertEqual(provenance["router_evidence"], "non-public historical artifact")
+        self.assertEqual(provenance["preflight_report"], "non-public historical artifact")
+
     def test_training_manifests_are_path_portable(self) -> None:
         manifest_dir = ROOT / "training/artifacts/final_manifests"
         manifests = sorted(manifest_dir.glob("*.jsonl"))

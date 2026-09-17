@@ -73,6 +73,11 @@
     "prompt": "P2 constrained knowledge-aware evidence instruction",
     "timestamp_serialization": "T0 absolute source-procedure timeline",
     "router": "H2",
+    "candidate_config": {
+      "submitted_image_sha256": "ee83c8a437aa5fe5ec245fdb0e99c70695c42a04663c7d9506c2c0ea6a45c253",
+      "public_release_path": "resources/final_candidate_config.json",
+      "public_release_sha256": "48f41f8025a38a24a69b62c8a9e52c7378405959e6a2b6510a177b7e4266551e"
+    },
     "routes": {
       "aggregation": "AGG specialist / R0",
       "temporal": "Generalist / R0",
