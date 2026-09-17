@@ -128,6 +128,20 @@ class PublicReleaseContractTests(unittest.TestCase):
                     f"non-portable video path in {path}: {row['video_path']}",
                 )
 
+    def test_scope_metadata_is_documented_as_compatibility_artifact(self) -> None:
+        scope_readme = (ROOT / "training/artifacts/scope/README.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("historical compatibility artifact", scope_readme)
+        self.assertIn("PS_JOINT_LMV", scope_readme)
+        self.assertIn("not the authority for the final recipe", scope_readme)
+
+    def test_training_examples_use_distinct_output_directories(self) -> None:
+        for path in (ROOT / "README.md", ROOT / "training/README.md"):
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("--output-dir outputs/SEG010_FINAL_GENERAL", text)
+            self.assertIn("--output-dir outputs/SEG010_FINAL_AGGREGATION", text)
+
     def test_specialist_release_bindings_have_public_sources(self) -> None:
         config = read_json(ROOT / "resources/final_candidate_config.json")
         specialists = config["specialists"]

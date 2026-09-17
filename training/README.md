@@ -5,6 +5,9 @@ General and Aggregation specialists. The historical experiment filenames are
 kept in provenance outside this public entry point; the supported public
 entry point is `train.py`.
 
+These historical-named modules are retained as internal dependencies of the
+final trainer; `training/train.py` is the supported public entry point.
+
 The state packs and locked manifests use Git LFS. Run `git lfs pull` from the
 repository root after cloning.
 
@@ -41,8 +44,13 @@ are not mounted at `/data/focus` and `/cache`.
 From the repository root:
 
 ```bash
-torchrun --standalone --nproc_per_node=4 training/train.py --recipe general
-torchrun --standalone --nproc_per_node=4 training/train.py --recipe aggregation
+torchrun --standalone --nproc_per_node=4 training/train.py \
+  --recipe general \
+  --output-dir outputs/SEG010_FINAL_GENERAL
+
+torchrun --standalone --nproc_per_node=4 training/train.py \
+  --recipe aggregation \
+  --output-dir outputs/SEG010_FINAL_AGGREGATION
 ```
 
 The recipes use the final SEG010 contract:
@@ -64,5 +72,6 @@ For a short smoke run, add `--max-updates 1`. A normal run omits that option.
 Use `--resume` with a complete checkpoint directory to resume; the trainer
 restores optimizer, schedule, cursor, stage, and per-rank RNG state.
 
-Outputs default to `outputs/SEG010_FINAL/` and are intentionally ignored by
-the public Git repository.
+Use separate output directories when running both recipes, as shown above.
+The trainer's default output directory remains `outputs/SEG010_FINAL/`; output
+directories are intentionally ignored by the public Git repository.

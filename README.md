@@ -90,13 +90,21 @@ post-save release record.
 Training requires four visible CUDA devices and is launched with `torchrun`:
 
 ```bash
-torchrun --standalone --nproc_per_node=4 training/train.py --recipe general
-torchrun --standalone --nproc_per_node=4 training/train.py --recipe aggregation
+torchrun --standalone --nproc_per_node=4 training/train.py \
+  --recipe general \
+  --output-dir outputs/SEG010_FINAL_GENERAL
+
+torchrun --standalone --nproc_per_node=4 training/train.py \
+  --recipe aggregation \
+  --output-dir outputs/SEG010_FINAL_AGGREGATION
 ```
 
 See [`training/README.md`](training/README.md) for dependencies, the final
 recipe, resume behavior, and output locations. Training outputs are generated
 locally and are not copied into the Docker image.
+
+These historical-named modules are retained as internal dependencies of the
+final trainer; `training/train.py` is the supported public entry point.
 
 ## Submission image
 
