@@ -85,6 +85,22 @@ class PublicReleaseContractTests(unittest.TestCase):
             for value in forbidden:
                 self.assertNotIn(value, text, f"private path in {path}")
 
+    def test_public_release_provenance_is_post_host_record(self) -> None:
+        release_path = ROOT / "docs/release_provenance_manifest.json"
+        release = read_json(release_path)
+        self.assertEqual(release["record_type"], "post_host_submission_release_provenance")
+        self.assertEqual(
+            release["submitted_image"]["image_id"],
+            "sha256:21ed8ffde4ba5938b3ad1cdda97b3b2e41e3f701df460a6eade23fe229b2c1f3",
+        )
+        self.assertEqual(
+            release["submitted_image"]["archive"]["sha256"],
+            "5d7d0ffc10728d001bf086d432a06386a8f48d381ffe1e3a30efedbce7716087",
+        )
+        self.assertEqual(release["submitted_image"]["archive"]["manifest_json"], "present")
+        self.assertEqual(release["validation"]["official_test_run"]["status"], "PASS")
+        self.assertFalse((ROOT / "resources/final_provenance_manifest.json").exists())
+
     def test_training_manifests_are_path_portable(self) -> None:
         manifest_dir = ROOT / "training/artifacts/final_manifests"
         manifests = sorted(manifest_dir.glob("*.jsonl"))

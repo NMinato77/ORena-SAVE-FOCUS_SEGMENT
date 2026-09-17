@@ -22,7 +22,7 @@ training configuration, and the final specialist state packs.
 │   ├── artifacts/              # locked scope and path-portable manifests
 │   ├── configs/                # final training and prompt specifications
 │   └── weights/                # canonical init and specialist state packs
-├── docs/                       # reproducibility notes
+├── docs/                       # reproducibility and release provenance
 └── test/                       # official sample fixtures
 ```
 
@@ -77,6 +77,13 @@ hf download google/siglip-base-patch16-384 \
 
 The exact file hashes for the SigLIP snapshot and the small Q2 classifier are
 recorded in `resources/q2_siglip_manifest.json`.
+
+The post-build provenance of the submitted Docker image is recorded in
+[`docs/release_provenance_manifest.json`](docs/release_provenance_manifest.json).
+It contains the source commit, image ID, archive hash, and host-side validation
+results without exposing local absolute paths. The build-time identity record
+embedded in the submitted image is intentionally kept separate from this
+post-save release record.
 
 ## Training
 
