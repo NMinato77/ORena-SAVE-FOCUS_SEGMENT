@@ -114,19 +114,10 @@ the released specialist packs into `resources/` before building the image. The
 Docker image remains an inference-only artifact and does not execute training
 code.
 
-The submission runs without network access and uses a single GPU, as required
-by the SEGMENT track. No development-only absolute host paths are required at
-inference time.
+## Tests
 
-## Local release checks
-
-The CPU-only release contract checks can be run with `pytest` from the
-repository root:
+Run the public release checks from the repository root:
 
 ```bash
 pytest -q tests/test_public_release.py
 ```
-
-These checks validate the build chain, portable training manifests, asset
-staging, recorded hashes, shell syntax, and the absence of private absolute
-paths. They do not build the Docker image or require a GPU.
