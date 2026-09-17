@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "record_type": "post_host_submission_release_provenance",
+  "design_version": "SEGMENT_P2_T0_v1",
+  "candidate_id": "SEG010_H2_P2_T0_specialist_v1",
+  "recorded_at": "2026-09-12T02:05:07+09:00",
+  "submitted_image": {
+    "source_git_commit": "2b04138abfb5fd68509f119e6ae2a47df8109612",
+    "image_tag": "segment-algorithm",
+    "image_id": "sha256:21ed8ffde4ba5938b3ad1cdda97b3b2e41e3f701df460a6eade23fe229b2c1f3",
+    "repo_digests": [],
+    "archive": {
+      "filename": "segment-algorithm_2026-09-12T02-05-07.230956509+09-00.tar.gz",
+      "size_bytes": 19982446033,
+      "sha256": "5d7d0ffc10728d001bf086d432a06386a8f48d381ffe1e3a30efedbce7716087",
+      "format": "docker save -> gzip",
+      "manifest_json": "present"
+    }
+  },
+  "official_workflow": {
+    "build": "./do_build.sh",
+    "test": "./do_test_run.sh",
+    "save": "./do_save.sh",
+    "image_tag": "segment-algorithm",
+    "docker_cli_executed_by_codex": false
+  },
+  "validation": {
+    "official_build": {
+      "status": "PASS",
+      "image_tag": "segment-algorithm",
+      "image_id": "sha256:21ed8ffde4ba5938b3ad1cdda97b3b2e41e3f701df460a6eade23fe229b2c1f3"
+    },
+    "official_test_run": {
+      "status": "PASS",
+      "offline": true,
+      "router_mode": "H2",
+      "fallback_warning_seen": false,
+      "answered": 3,
+      "failed": 0,
+      "answer_json_valid": true,
+      "answer_json": {
+        "request_count": 3,
+        "answer_count": 3,
+        "qids": ["q001", "q002", "q003"],
+        "schema": "qID/content/latency"
+      }
+    },
+    "post_save_direct_run": {
+      "status": "PASS",
+      "offline": true,
+      "image_tag": "segment-algorithm",
+      "image_id": "sha256:21ed8ffde4ba5938b3ad1cdda97b3b2e41e3f701df460a6eade23fe229b2c1f3",
+      "router_mode": "H2",
+      "fallback_warning_seen": false,
+      "batch_size": 3,
+      "answered": 3,
+      "failed": 0,
+      "batch_total_seconds": 2.459,
+      "mean_question_seconds": 0.820,
+      "inference_total_seconds": 13.006,
+      "gpu": "NVIDIA RTX 6000 Ada Generation",
+      "vram_free_gib": 46.9,
+      "vram_total_gib": 47.4,
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "docker_driver_version": "580.65.06",
+      "qids": ["q001", "q002", "q003"]
+    }
+  },
+  "candidate_identity": {
+    "base_model": "Qwen/Qwen3-VL-8B-Instruct",
+    "base_model_revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+    "prompt": "P2 constrained knowledge-aware evidence instruction",
+    "timestamp_serialization": "T0 absolute source-procedure timeline",
+    "router": "H2",
+    "candidate_config": {
+      "submitted_image_sha256": "ee83c8a437aa5fe5ec245fdb0e99c70695c42a04663c7d9506c2c0ea6a45c253",
+      "public_release_path": "resources/final_candidate_config.json",
+      "public_release_sha256": "48f41f8025a38a24a69b62c8a9e52c7378405959e6a2b6510a177b7e4266551e"
+    },
+    "routes": {
+      "aggregation": "AGG specialist / R0",
+      "temporal": "Generalist / R0",
+      "other": "Generalist / R1"
+    },
+    "specialist_packs": {
+      "general": {
+        "path": "training/weights/general_final_union_adapted_weights.safetensors",
+        "sha256": "b77f1627709032f80d7c105e877a45330551de7a88a5cbfb1ccf52e83d4ef7f7"
+      },
+      "aggregation": {
+        "path": "training/weights/agg_final_union_adapted_weights.safetensors",
+        "sha256": "724ec447dbba79ff902422f34d0ae14801e8de4d318be7f8474b45bd30a91739"
+      }
+    }
+  },
+  "provenance_scope": {
+    "image_embedded_build_record": {
+      "role": "immutable pre-build identity and configuration record",
+      "host_side_identity_available_after_build": false,
+      "public_release_record": "docs/release_provenance_manifest.json"
+    },
+    "host_side_record": {
+      "role": "post-build and post-save release identity and validation",
+      "included_here": true,
+      "absolute_host_paths": "omitted"
+    },
+    "historical_training_outputs": "not included in the public repository",
+    "challenge_data": "not included in the public repository",
+    "pretrained_base_assets": "not included in the public repository; obtain the pinned public revision as documented in README.md"
+  },
+  "public_repository": {
+    "url": "https://github.com/NMinato77/ORena-SAVE-FOCUS_SEGMENT",
+    "release_provenance_path": "docs/release_provenance_manifest.json",
+    "training_entrypoint": "training/train.py",
+    "submission_entrypoint": "inference.py"
+  },
+  "notes": [
+    "The post-save direct run was a local functional/runtime check on an RTX 6000 Ada, not an official platform hardware measurement.",
+    "The archive is a Docker image archive created with docker save and gzip, not a source tarball.",
+    "The public repository keeps the runtime candidate configuration and training package; generated submission staging assets remain local."
+  ]
+}

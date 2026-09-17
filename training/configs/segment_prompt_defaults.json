@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "design_version": "SEGMENT_P2_T0_v1",
+  "scope": "SEGMENT default and FRAME semantic counterpart",
+  "default_policy": {
+    "status": "active_until_explicitly_revised",
+    "applies_to": [
+      "SEG010 and later new SEGMENT experiments",
+      "SEGMENT ablations",
+      "SEGMENT continuations",
+      "SEGMENT production candidates"
+    ],
+    "segment_default": {
+      "evidence_instruction_ref": "segment.evidence_instruction",
+      "timestamp_variant_ref": "segment.timestamp_variant"
+    },
+    "frame_default": {
+      "evidence_instruction_ref": "frame.evidence_instruction",
+      "timestamp_variant": null
+    },
+    "explicit_revision_required_for": [
+      "P0 or P1 evidence instruction",
+      "T1 compact timestamp serialization",
+      "independent prompt wording",
+      "independent timestamp serialization"
+    ],
+    "revision_record_must_include": [
+      "reason",
+      "before_and_after_specification",
+      "comparison_basis_against_P2_T0",
+      "train_eval_compatibility",
+      "downstream_experiment_impact",
+      "new_design_version"
+    ],
+    "historical_artifacts": "Preserve historical configs and raw artifacts with the specification actually used."
+  },
+  "segment": {
+    "evidence_instruction_id": "P2",
+    "evidence_instruction": "Use the sampled frames as visual evidence. Base visual claims on the frames. When the question explicitly asks about typical surgical use, clinical context, or what usually occurs, you may also use your general surgical knowledge.",
+    "timestamp_variant": "T0",
+    "timestamp_frame_template": "Frame timestamp (absolute source-procedure timeline): {timestamp:.1f} seconds.",
+    "timestamp_context": "Sampled-frame timestamps are absolute source-procedure timeline timestamps."
+  },
+  "frame": {
+    "evidence_instruction_id": "P2_FRAME",
+    "evidence_instruction": "Use the provided frame as visual evidence. Base visual claims on the frame. When the question explicitly asks about typical surgical use, clinical context, or what usually occurs, you may also use your general surgical knowledge."
+  },
+  "selection": {
+    "preregistered_selection": {
+      "segment_evidence_instruction": "P0",
+      "timestamp_serialization": "T0"
+    },
+    "final_design_selection": {
+      "segment_evidence_instruction": "P2",
+      "timestamp_serialization": "T0"
+    },
+    "rationale": "P2 was selected as the final engineering/design choice because it is semantically aligned with knowledge-demand questions while the pre-registered strict gate result remains P0. T0 is retained because T1 regressed NLL in every major subset under the available matched setting."
+  },
+  "preflight": {
+    "report": "notes/seg010_prompt_preflight.md",
+    "artifact_root": "outputs/SEG010_prompt_preflight_v1",
+    "raw_results_immutable": true
+  }
+}

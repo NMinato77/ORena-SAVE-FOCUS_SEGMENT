@@ -7,7 +7,8 @@ encoder and frozen classifier. The startup-only fallback chain is H2 → Q1-R5
 per-question fallback are not used.
 
 Training used FOCUS challenge data and public pretrained model assets; detailed
-checkpoint and router provenance is recorded in the packaged provenance manifest.
+checkpoint and router provenance is recorded in the public
+[`release provenance manifest`](docs/release_provenance_manifest.json).
 
 The operational routes are:
 

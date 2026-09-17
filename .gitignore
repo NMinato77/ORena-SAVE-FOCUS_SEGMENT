@@ -3,3 +3,5 @@ __pycache__/
 resources/qwen3-vl-8b/
 resources/.asset_stamp
 resources/q2_siglip_base_patch16_384/
+resources/specialists/
+/outputs/

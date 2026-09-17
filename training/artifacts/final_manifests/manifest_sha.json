@@ -1,0 +1,16 @@
+{
+  "general_nonagg_source_manifest.jsonl": "924def633ae02045708a793ee8531adf508be7764511aa0f8b1138ac4f95b10e",
+  "general_stage1_seg_shuffle.jsonl": "8a6eba5b47aaabdd43d363163ca1fe1aec0bc0e1729f682d9e6a4b9eb22f1762",
+  "general_stage2_seg_shuffle.jsonl": "b38d7550de285b178385421df4b9028aa595494e2fc81c3efd94c4443312e3fd",
+  "general_ps_frame_stream.jsonl": "891b997241397bc0bde3e8040c8d105587dcc40b9c76532a748d8d20fccf252c",
+  "aggregation_rand_frame_2048.jsonl": "561a0a0e61f0b719421a81f1fb7dfa2b5d52bc9c92bdbb54e9f9b72c79887811",
+  "aggregation_general_seg_2048.jsonl": "2007c592864b55ac16b1c6c66b1ef160637d3d2e84f2bd48bf692001e6227735",
+  "aggregation_fullpublic_shuffle.jsonl": "03eb47ddd148029cf5c6a3749335910e09d95434a9230905b01e50551540fcb3",
+  "public_segment_source": "cbb3ac2a9fe09885973750ffb894b0e94c92f72dba7a4346673f1182c73b98bf",
+  "frame_source": "b97b9e515c0089bd8f68c4d9dfa87836ab78b3f2a8843e78657f5519cbb508d3",
+  "ps_original_source": "59dcdd0532f48113f4d9e42b584b42fade5754ccd841143d63d025b67af45e2d",
+  "ps_random_source": "430c9945a74e270fbd6c7853ff0f0ae15ffe9bf1d104079f2baf57d987c3ff57",
+  "router_model": "c67cc7f7fdec10e96d9ef59ab6ef316b471bf7c34a54226b146e7a2cab6912e3",
+  "panel": "35453509a4f9dc20fc0005fbe7949c51ba9b900d7ccea870b670b930bb628416",
+  "path_serialization": "${FOCUS_DATA_ROOT}/...; replace with FOCUS_DATA_ROOT at runtime"
+}

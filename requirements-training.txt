@@ -1,0 +1,3 @@
+# Install after the root inference requirements in a CUDA-enabled environment.
+# PyTorch itself must be supplied as a compatible CUDA build by the environment.
+PyNvVideoCodec==2.2.0

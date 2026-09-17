@@ -1,0 +1,45 @@
+{
+  "experiment": "SEG010_final_inference_frozen_policy",
+  "design_version": "SEG010_FINAL_TRAINING_PREFLIGHT_scaled_transfer_v2",
+  "general_checkpoint": "training/weights/general_final_union_adapted_weights.safetensors",
+  "aggregation_checkpoint": "training/weights/agg_final_union_adapted_weights.safetensors",
+  "router": {
+    "type": "QUESTION_ONLY_5CLASS_FROZEN",
+    "model": "resources/q1_tfidf_r5_router.joblib",
+    "uses_reference_capability_at_inference": false,
+    "uses_answer_at_inference": false,
+    "uses_dataset_at_inference": false
+  },
+  "routes": {
+    "aggregation": {
+      "model": "AGGREGATION",
+      "sampling": "FIXED_1FPS",
+      "max_frames": 240,
+      "max_pixels": 50176
+    },
+    "temporal_grounding": {
+      "model": "GENERAL",
+      "sampling": "FIXED_1FPS",
+      "max_frames": 240,
+      "max_pixels": 50176
+    },
+    "object_recognition": {
+      "model": "GENERAL",
+      "sampling": "R1_BALANCED",
+      "base": "FIXED_1FPS",
+      "frame_policy": "HALF_R0_TIMELINE_ENDPOINT_PRESERVING",
+      "max_pixels": 100352
+    },
+    "event_understanding": {
+      "model": "GENERAL",
+      "same_as": "object_recognition"
+    },
+    "complex_reasoning": {
+      "model": "GENERAL",
+      "same_as": "object_recognition"
+    }
+  },
+  "prompt": "P2 / P2_FRAME",
+  "timestamp": "T0",
+  "R2": "excluded"
+}

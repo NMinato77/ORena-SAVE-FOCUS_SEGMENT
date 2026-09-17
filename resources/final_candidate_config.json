@@ -132,10 +132,10 @@
     "one_response_per_request": true
   },
   "provenance": {
-    "prompt_source": "configs/segment_prompt_defaults.json",
-    "sampling_source": "src/orena_procedure/seg010_sampling.py",
-    "router_evidence": "notes/seg010_cross_timescale/router_h2_rescue_analysis_v1.md",
-    "preflight_report": "notes/seg010_cross_timescale/precompletion_submission_update_v1.md",
+    "prompt_source": "training/configs/segment_prompt_defaults.json",
+    "sampling_source": "inference.py",
+    "router_evidence": "non-public historical artifact",
+    "preflight_report": "non-public historical artifact",
     "historical_artifacts_immutable": true
   }
 }
